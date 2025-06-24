@@ -1,18 +1,10 @@
-graph TD;
-    A[GitHub Enterprise] --> B[Data Extractor];
-    B --> C[Data Preprocessing & Staging];
-    C --> D{Relationship Analysis Engine (LLM)};
-    D --> E[YAML Generator];
-    E --> F[/dependency_graph.yaml/];
-    F --> G((Frontend Application));
-
-    subgraph "Core System"
-        B
-        C
-        D
-        E
-    end
-
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style F fill:#ccf,stroke:#333,stroke-width:2px
-    style G fill:#9cf,stroke:#333,stroke-width:2px
+graph TD
+    A[GitHub Enterprise] --> |Read Access| B[Data Collection Module]
+    B --> |Repository Data| C[Data Processing Layer]
+    C --> |Structured Data| D[LLM Analysis Engine]
+    D --> |Relationship Data| E[YAML Generator]
+    E --> |Relationship YAML| F[Visualization Frontend]
+    G[Configuration Service] --> B
+    G --> D
+    H[(Relationship Database)] <--> D
+    B --> H
