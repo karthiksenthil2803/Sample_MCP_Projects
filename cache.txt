@@ -1,0 +1,65 @@
+graph TB
+    subgraph "GitHub Enterprise"
+        GH[GitHub Repositories]
+        API[GitHub REST/GraphQL API]
+    end
+
+    subgraph "Data Collection Layer"
+        GHC[GitHub Collector]
+        CACHE[Repository Cache]
+        META[Metadata Store]
+    end
+
+    subgraph "Analysis Engine"
+        subgraph "Analyzers"
+            API_A[API Dependency Analyzer]
+            PKG_A[Package Dependency Analyzer]
+            IMP_A[Import/Include Analyzer]
+            DOC_A[Documentation Analyzer]
+            WF_A[Workflow Analyzer]
+            SHARED_A[Shared Library Analyzer]
+        end
+        
+        AGG[Analysis Aggregator]
+        LLM[LLM Relationship Engine]
+    end
+
+    subgraph "Output Generation"
+        YAML_GEN[YAML Generator]
+        VALIDATOR[Schema Validator]
+        OUTPUT[Dependency Graph YAML]
+    end
+
+    subgraph "Frontend Integration"
+        PARSER[YAML Parser]
+        VIZ[Dependency Visualizer]
+        UI[Web Interface]
+    end
+
+    GH --> API
+    API --> GHC
+    GHC --> CACHE
+    GHC --> META
+    
+    CACHE --> API_A
+    CACHE --> PKG_A
+    CACHE --> IMP_A
+    CACHE --> DOC_A
+    CACHE --> WF_A
+    CACHE --> SHARED_A
+    
+    API_A --> AGG
+    PKG_A --> AGG
+    IMP_A --> AGG
+    DOC_A --> AGG
+    WF_A --> AGG
+    SHARED_A --> AGG
+    
+    AGG --> LLM
+    LLM --> YAML_GEN
+    YAML_GEN --> VALIDATOR
+    VALIDATOR --> OUTPUT
+    
+    OUTPUT --> PARSER
+    PARSER --> VIZ
+    VIZ --> UI
