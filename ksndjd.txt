@@ -1,0 +1,31 @@
+from pyvis.network import Network
+
+# Create Pyvis network
+net = Network(height="500px", width="100%", bgcolor="#ffffff", font_color="#000000")
+
+# Transparent node style: background transparent, border and text solid
+transparent_node_style = {
+    "background": "rgba(0,0,0,0)",  # Transparent background
+    "border": "#1f77b4",            # Solid border color
+    "highlight": {
+        "background": "rgba(0,0,0,0)",
+        "border": "#ff7f0e"
+    },
+    "hover": {
+        "background": "rgba(0,0,0,0)",
+        "border": "#2ca02c"
+    }
+}
+
+# Add nodes with the transparent background style
+net.add_node(1, label="Alpha", color=transparent_node_style, font={"color": "#1f77b4"})
+net.add_node(2, label="Beta", color=transparent_node_style, font={"color": "#1f77b4"})
+net.add_node(3, label="Gamma", color=transparent_node_style, font={"color": "#1f77b4"})
+
+# Add edges
+net.add_edge(1, 2)
+net.add_edge(2, 3)
+net.add_edge(3, 1)
+
+# Save and open in browser
+net.show("transparent_nodes_graph.html")
